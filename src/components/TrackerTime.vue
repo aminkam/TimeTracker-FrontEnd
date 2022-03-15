@@ -5,7 +5,9 @@
     <div class="head">
       <div class="date">Today, {{ getDate }}</div>
       <div class="headparametre">
-        <button type="button" class="stop" @click="add()">Stop</button>
+        <button type="button" class="stop" @click="add(), reloadPage()">
+          Stop
+        </button>
         <button
           type="button"
           class="start"
@@ -48,9 +50,9 @@ export default defineComponent({
   methods: {
     getCurrentTime: () => {
       const date = new Date();
-
       return date;
     },
+
     formatDate: (date: Date) => {
       const time = date.toLocaleString("en-US", {
         hour: "numeric", // numeric, 2-digit
@@ -60,6 +62,11 @@ export default defineComponent({
 
       return time;
     },
+    // inc: function () {
+    //   const amin = this.getCurrentTime();
+    //   return setInterval(amin, 1000);
+    // },
+
     getTimeTrackers: () => {
       return axios
         .get("http://localhost:3000/")
@@ -99,6 +106,9 @@ export default defineComponent({
 
       return total;
     },
+    reloadPage() {
+      window.location.reload();
+    },
   },
   computed: {
     getDate: function () {
@@ -125,12 +135,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scooped>
+@import "../assets/TrackerTime.scss";
+
 .tracker {
   display: flex;
   flex-direction: column;
   margin: 10% 20%;
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: $white;
   height: auto;
   padding: 5%;
 
@@ -142,7 +154,7 @@ export default defineComponent({
     // margin-bottom: 50px;
     padding-bottom: 30px;
     height: 110px;
-    border-bottom: 1.6px solid #60b669;
+    border-bottom: 1.6px solid $green;
     .headparametre {
       width: 40%;
       align-items: center;
@@ -164,7 +176,7 @@ export default defineComponent({
       width: 100px;
       height: 32px;
       font-size: 15px;
-      border: 1px solid #60b669;
+      border: 1px solid $green;
     }
     .start:hover {
       background: rgb(248, 247, 247);
